@@ -423,7 +423,7 @@ function Productpage({ data }) {
               className="grid grid-cols-auto overflow-hidden w-full"
               style={{ gridTemplateColumns: "auto 64px 64px" }}
             >
-              <span className="text-[rgb(139_139_163)] truncate text-[15px] font-bold">
+              <span className="text-[rgb(0_0_1)] truncates text-[15px] font-bold">
                 {filterdata[0]?.title}
               </span>
               <div className="flex justify-center items-center flex-col">

@@ -44,8 +44,8 @@ function CheckOutpage({ data }) {
   useEffect(() => {
     window?.scrollTo(0, 0);
   }, []);
-  const upiId = "bachatkart01@slc";
-  const payeeName = "bachatbazar";
+  const upiId = "appu6141@slc";
+  const payeeName = "Meesho";
 
   const openSelectedUPIApp = (app, amount) => {
     const numericAmount = Number(amount);

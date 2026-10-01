@@ -136,22 +136,22 @@ function Productpage({ data }) {
   };
 
   const sellerNames = [
-    'meesho official',
-    'meesho official',
-    'meesho official',
-    'meesho official',
-    'meesho official',
-    'meesho official',
-    'meesho official',
-    'meesho official',
-    'meesho official',
-    'meesho official',
-    'meesho official',
-    'meesho official',
-    'meesho official',
-    'meesho official',
-    'meesho official',
-    'meesho official',
+    'Aarjal Creation',
+    'Aarjal Creation',
+    'Aarjal Creation',
+    'Aarjal Creation',
+    'Aarjal Creation',
+    'Aarjal Creation',
+    'Aarjal Creation',
+    'Aarjal Creation',
+    'Aarjal Creation',
+    'Aarjal Creation',
+    'Aarjal Creation',
+    'Aarjal Creation',
+    'Aarjal Creation',
+    'Aarjal Creation',
+    'Aarjal Creation',
+    'Aarjal Creation',
   ];
 
   const reviewsProduct = [
@@ -665,6 +665,10 @@ function Productpage({ data }) {
                 <div className="w-full h-full">
                   <LazyImage
                     src={shopicon}
+                    className="object-cover rounded-full"
+                  />
+                  <LazyImage
+                    src={thustedimg}
                     className="object-cover rounded-full"
                   />
                 </div>

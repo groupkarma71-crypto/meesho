@@ -1,12 +1,16 @@
 import React, { Suspense, lazy, useEffect, useState } from "react";
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes, useLocation } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+
 import ShowHeader from "./components/ShowHeader";
 import Loading from "./components/Loading";
 import UPIPayment from "./components/UPIPayment";
+import BottomNav from "./components/BottomNav";
 
 function App() {
+  const location = useLocation();
+
   const HomePage = lazy(() => import("./components/HomePage"));
   const Productpage = lazy(() => import("./components/Productpage"));
   const CategoryPage = lazy(() => import("./components/CategoryPage"));
@@ -14,12 +18,14 @@ function App() {
   const CheckOutpage = lazy(() => import("./components/CheckOutpage"));
   const PaymentPage = lazy(() => import("./components/PaymentPage"));
   const Cartpage = lazy(() => import("./components/Cartpage"));
-
-  // Thank You Page
   const OrderThankYou = lazy(() => import("./components/OrderThankYou"));
 
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
+
+  /* =========================================
+     LOAD PRODUCTS
+  ========================================= */
 
   useEffect(() => {
     fetch("/products.json")
@@ -32,6 +38,7 @@ function App() {
             ratenum: Math.floor(Math.random() * 99901 + 100),
           }))
         );
+
         setLoading(false);
       })
       .catch((e) => {
@@ -39,6 +46,10 @@ function App() {
         setLoading(false);
       });
   }, []);
+
+  /* =========================================
+     DISABLE RIGHT CLICK / DEV SHORTCUTS
+  ========================================= */
 
   useEffect(() => {
     const h = (e) => {
@@ -48,11 +59,14 @@ function App() {
           e.shiftKey &&
           ["I", "J", "C"].includes(e.key.toUpperCase())) ||
         (e.ctrlKey && e.key.toUpperCase() === "U")
-      )
+      ) {
         e.preventDefault();
+      }
     };
 
-    const c = (e) => e.preventDefault();
+    const c = (e) => {
+      e.preventDefault();
+    };
 
     document.addEventListener("keydown", h);
     document.addEventListener("contextmenu", c);
@@ -63,11 +77,25 @@ function App() {
     };
   }, []);
 
-  if (loading) return <Loading />;
+  /* =========================================
+     LOADING
+  ========================================= */
+
+  if (loading) {
+    return <Loading />;
+  }
 
   return (
     <>
+      {/* =========================================
+          ROUTES
+      ========================================= */}
+
       <Routes>
+        {/* =========================================
+            HEADER ROUTES
+        ========================================= */}
+
         <Route
           path="/"
           element={
@@ -76,6 +104,8 @@ function App() {
             </Suspense>
           }
         >
+          {/* HOME */}
+
           <Route
             index
             element={
@@ -84,6 +114,8 @@ function App() {
               </Suspense>
             }
           />
+
+          {/* CATEGORY */}
 
           <Route
             path="category/:category"
@@ -94,6 +126,8 @@ function App() {
             }
           />
 
+          {/* PRODUCT */}
+
           <Route
             path="productdetails/:id/:name"
             element={
@@ -102,6 +136,8 @@ function App() {
               </Suspense>
             }
           />
+
+          {/* ADDRESS */}
 
           <Route
             path="addaddress"
@@ -113,6 +149,10 @@ function App() {
           />
         </Route>
 
+        {/* =========================================
+            CART
+        ========================================= */}
+
         <Route
           path="/cart"
           element={
@@ -121,6 +161,10 @@ function App() {
             </Suspense>
           }
         />
+
+        {/* =========================================
+            CHECKOUT
+        ========================================= */}
 
         <Route
           path="/checkout"
@@ -131,6 +175,10 @@ function App() {
           }
         />
 
+        {/* =========================================
+            PAYMENT
+        ========================================= */}
+
         <Route
           path="/payment"
           element={
@@ -139,6 +187,10 @@ function App() {
             </Suspense>
           }
         />
+
+        {/* =========================================
+            UPI
+        ========================================= */}
 
         <Route
           path="/upi"
@@ -149,7 +201,10 @@ function App() {
           }
         />
 
-        {/* THANK YOU PAGE */}
+        {/* =========================================
+            THANK YOU
+        ========================================= */}
+
         <Route
           path="/thank-you"
           element={
@@ -160,8 +215,22 @@ function App() {
         />
       </Routes>
 
+      {/* =========================================
+          BOTTOM NAV - ONLY HOME PAGE
+      ========================================= */}
+
+      {location.pathname === "/" && <BottomNav />}
+
+      {/* =========================================
+          TOAST
+      ========================================= */}
+
       <ToastContainer
-        className="!bottom-[80px]"
+        className={
+          location.pathname === "/"
+            ? "!bottom-[80px]"
+            : "!bottom-[20px]"
+        }
         position="bottom-center"
         autoClose={3000}
         hideProgressBar
